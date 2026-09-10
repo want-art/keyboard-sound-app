@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+<title>键盘音效</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="logo" id="logo">⌨</div>
+      <div>
+        <h1>键盘音效</h1>
+        <p class="sub">机械键盘音效模拟 · 全局运行</p>
+      </div>
+    </div>
+    <div class="status">
+      <span class="pill" id="runPill">● 运行中</span>
+      <span class="pill muted" id="scenePill">无场景</span>
+    </div>
+    <div class="hotkeys">
+      <code>Ctrl+Alt+K</code> 静音
+      <span class="sep">|</span>
+      <code>Ctrl+Alt+O</code> 悬浮键盘
+    </div>
+  </header>
+
+  <main>
+    <!-- 音色 -->
+    <section>
+      <h2>音色 <span class="tip">点击试听</span></h2>
+      <div class="profile-grid" id="profileGrid"></div>
+    </section>
+
+    <!-- 音量 -->
+    <section>
+      <h2>音量</h2>
+      <div class="row">
+        <label for="vol">整体音量</label>
+        <input type="range" id="vol" min="0" max="100" step="1">
+        <span class="val" id="volVal">85%</span>
+        <label class="switch mini"><input type="checkbox" id="mute"><span>静音</span></label>
+      </div>
+    </section>
+
+    <!-- 手感增强 -->
+    <section>
+      <h2>手感增强</h2>
+      <div class="card">
+        <div class="enum">
+          <div class="opt"><label class="switch"><input type="checkbox" id="dualSound"><span>按压 + 回弹双音效</span></label></div>
+          <p class="hint">下压与回弹各触发一次声音，还原真实轴体段落感。</p>
+        </div>
+        <div class="enum">
+          <div class="opt"><label class="switch"><input type="checkbox" id="speedPitch"><span>打字越快音调越高</span></label></div>
+          <p class="hint">随击键速度实时变调，越敲越亮。</p>
+        </div>
+        <div class="row ind">
+          <label for="sens">变调灵敏度</label>
+          <input type="range" id="sens" min="0" max="2" step="0.05">
+          <span class="val" id="sensVal">1.0×</span>
+        </div>
+        <div class="enum">
+          <div class="opt"><label class="switch"><input type="checkbox" id="jitter"><span>音量随机微调</span></label></div>
+          <p class="hint">每键音量轻微起伏，去掉机械重复感。</p>
+        </div>
+        <div class="row ind">
+          <label for="jitterAmt">微调幅度</label>
+          <input type="range" id="jitterAmt" min="0" max="100" step="1">
+          <span class="val" id="jitterAmtVal">45%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特殊键 -->
+    <section>
+      <h2>特殊键 <span class="tip">可单独设音效</span></h2>
+      <div class="card grid3" id="specialRow"></div>
+    </section>
+
+    <!-- 场景 -->
+    <section>
+      <h2>场景模式</h2>
+      <div class="scene-grid" id="sceneGrid"></div>
+      <div class="card mini-list">
+        <label class="switch"><input type="checkbox" id="focusRain"><span>专注模式 · 雨声底噪</span></label>
+        <label class="switch"><input type="checkbox" id="nightAuto"><span>深夜自动降音（23:00–07:00）</span></label>
+      </div>
+    </section>
+
+    <!-- 可视化 -->
+    <section>
+      <h2>可视化</h2>
+      <div class="card">
+        <div class="enum">
+          <div class="opt"><label class="switch"><input type="checkbox" id="overlayVis"><span>显示透明悬浮键盘</span></label></div>
+        </div>
+        <div class="row">
+          <label for="opacity">悬浮窗透明度</label>
+          <input type="range" id="opacity" min="5" max="100" step="1">
+          <span class="val" id="opacityVal">55%</span>
+        </div>
+        <div class="enum">
+          <div class="opt"><label class="switch"><input type="checkbox" id="ripple"><span>按键波纹特效</span></label></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 音效包 -->
+    <section>
+      <h2>自定义音效包</h2>
+      <div class="card pack">
+        <p class="hint" id="packInfo">未导入。选择包含 <code>down</code>/<code>up</code>/<code>space</code>/<code>enter</code>/<code>backspace</code> 开头音频文件（wav/mp3/ogg）的文件夹即可覆盖对应声音。</p>
+        <div class="btn-row">
+          <button id="importPackBtn" class="btn primary">📁 导入音效包</button>
+          <button id="clearPackBtn" class="btn ghost">清除音效包</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 统计 -->
+    <section>
+      <h2>今日统计 <span class="live">●</span></h2>
+      <div class="stat-grid">
+        <div class="stat"><div class="num" id="statCount">0</div><div class="lab">按键数</div></div>
+        <div class="stat"><div class="num" id="statWpm">0</div><div class="lab">速度 WPM</div></div>
+        <div class="stat"><div class="num" id="statActive">0<span class="unit">分</span></div><div class="lab">活跃时长</div></div>
+      </div>
+    </section>
+  </main>
+  <footer>关闭此窗口应用继续在后台运行（托盘）。随时双击托盘图标恢复。</footer>
+</div>
+<script src="renderer.js"></script>
+</body>
+</html>

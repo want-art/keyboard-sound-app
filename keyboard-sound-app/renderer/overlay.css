@@ -1,0 +1,42 @@
+:root { --opacity: 0.55; }
+html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; width: 100%; height: 100%; }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+
+.wrap { position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center;
+  transition: opacity .6s ease; }
+
+/* 键盘玻璃面板 */
+.board { position: relative; padding: 18px 18px 16px; border-radius: 16px; background: rgba(14,17,22,.72);
+  backdrop-filter: blur(10px) saturate(1.2); border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 50px rgba(0,0,0,.45); display: flex; flex-direction: column; gap: 7px; }
+
+.row { display: flex; gap: 6px; }
+.key { flex-grow: 0; flex-basis: 0; height: 34px; flex: 1 1 0; display: grid; place-items: center;
+  border-radius: 7px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.07);
+  color: rgba(235,240,248,.85); font-size: 12px; font-weight: 600; letter-spacing: .5px;
+  user-select: none; transition: background .06s, transform .06s, box-shadow .12s; position: relative; }
+
+/* 每个按键宽度：flex-grow = w（在所在行内按比例分配） */
+.key { flex-grow: var(--w, 1); }
+.key.space { flex-grow: var(--w, 5); }
+
+.key .ichar { font-size: 15px; }
+
+.key.press, .key.down { background: linear-gradient(160deg, #6ea8ff, #8b5cf6); color: #fff;
+  box-shadow: 0 0 16px rgba(110,168,255,.7); transform: scale(.94); border-color: transparent; }
+.key.down { animation: none; }
+
+/* 波纹容器 */
+#fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+
+/* 淡出提示 */
+.fade { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 11px;
+  color: rgba(160,175,195,.55); letter-spacing: 2px; z-index: 4; opacity: 0; transition: opacity .5s; }
+
+/* 空闲自动变淡（idle 类切换） */
+body.idle .board { opacity: calc(var(--opacity) * 0.08); }
+body.idle .fade { opacity: .5; }
+body.active .board { opacity: var(--opacity); }
+
+@keyframes glow { 0% { filter: brightness(1.4); } 100% { filter: brightness(1); } }

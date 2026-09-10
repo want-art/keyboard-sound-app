@@ -1,0 +1,19 @@
+{
+  "name": "keyboard-sound-app",
+  "productName": "键盘音效",
+  "version": "1.0.0",
+  "description": "机械键盘音效模拟桌面应用：青轴/红轴/打字机/木鱼/水滴/钢琴/八音盒/麻将",
+  "main": "main.js",
+  "author": "keyboard-sound-app",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "setup": "node make-icon.js"
+  },
+  "dependencies": {
+    "uiohook-napi": "^1.5.5"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}
