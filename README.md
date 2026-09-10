@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⌨️ 键盘音效 · Keyboard Sound FX
+# ⌨️ 内置键盘音效 · Keyboard Sound FX
 
 **在你敲击物理键盘时，实时发出机械键盘音效的 Windows 桌面应用**
 
